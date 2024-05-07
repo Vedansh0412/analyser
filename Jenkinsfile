@@ -2,10 +2,21 @@ pipeline {
     agent any
     
     stages {
+        stage('Setup') {
+            steps {
+                script {
+                    // Create and activate a virtual environment
+                    sh 'python3 -m venv venv'
+                    sh 'source venv/bin/activate'
+                }
+            }
+        }
         stage('Build') {
             steps {
-                // Add commands to build your Python application (if applicable)
-                sh 'pip install -r requirements.txt'  // Install Python dependencies
+                script {
+                    // Install required dependencies using pip
+                    sh 'pip install -r requirements.txt'
+                }
             }
         }
         stage('Test') {
@@ -16,9 +27,8 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                // Deploying the Python application
                 script {
-                    // Assuming you have a deployment script named deploy.sh
+                    // Deploying the Python application
                     sh './deploy.sh'
                 }
             }
@@ -34,6 +44,8 @@ pipeline {
         }
         always {
             echo 'Pipeline finished.'
+            // Deactivate the virtual environment
+            sh 'deactivate'
         }
     }
 }
