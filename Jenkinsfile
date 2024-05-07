@@ -6,8 +6,8 @@ pipeline {
             steps {
                 script {
                     // Create and activate a virtual environment
-                    sh 'python3 -m venv venv'
-                    sh 'source venv/bin/activate'
+                    sh 'python3 -m venv venv' // Use the appropriate command for Windows if necessary
+                    sh 'source venv/bin/activate' // Use the appropriate command for Windows if necessary
                 }
             }
         }
@@ -45,7 +45,7 @@ pipeline {
         always {
             echo 'Pipeline finished.'
             // Deactivate the virtual environment
-            sh 'deactivate'
+            sh 'deactivate' // Use the appropriate command for Windows if necessary
         }
     }
 }
